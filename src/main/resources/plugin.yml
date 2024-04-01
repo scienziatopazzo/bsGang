@@ -1,0 +1,5 @@
+name: bsGang
+version: '${project.version}'
+main: dev.betterstudios.it.Main
+softdepend:
+  - PlaceholderAPI

@@ -1,0 +1,44 @@
+license: "YOUR LICENSE HERE"
+
+
+# SQLITE
+# MYSQL
+use: "SQLITE"
+
+database:
+  sqlite: "teams.db"
+  mysql:
+    host: "localhost"
+    port: "3306"
+    database: "bsGang"
+    username: "root"
+    password: ""
+
+
+
+team:
+  length:
+    max: 10
+    min: 3
+  badWord:
+    - "dick"
+    - "ass"
+  players:
+    infinite: false
+    max: 4
+  pvp: false # If you change this, you must reload the server
+  saveDelay: 10 # is in second
+  points:
+    death: 2 # remove 2 points
+    kill: 1 # add 1 point
+
+rank:
+  member: "[member]"
+  moderator: "[mod]"
+  leader: "[leader]"
+
+placeholders:
+  active: true
+  no_team: "No Team"
+  no_team_leaderboard_name: "-----"
+  no_team_leaderboard_stats: "-"
