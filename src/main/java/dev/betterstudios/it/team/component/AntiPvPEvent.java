@@ -11,7 +11,7 @@ public class AntiPvPEvent implements Listener {
 
     @EventHandler
     public void onPvP(EntityDamageByEntityEvent e) {
-        if(!(e.getEntity() instanceof Player) && !(e.getDamager() instanceof Player)) return;
+        if (!(e.getEntity() instanceof Player) || !(e.getDamager() instanceof Player)) return;
         if(isEqualTeam((Player) e.getEntity(), (Player) e.getDamager()))
             e.setCancelled(true);
     }

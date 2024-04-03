@@ -75,11 +75,17 @@ public class Team {
     }
 
     public void chat(Player player, String message) {
+        boolean b = false;
         String prefix = leader.equalsIgnoreCase(player.getName()) ? Main.getInstance().getConfiguration().getString("rank.leader") : moderators.contains(player.getName()) ? Main.getInstance().getConfiguration().getString("rank.moderator") : Main.getInstance().getConfiguration().getString("rank.member");
         for (Player team_member : getOnlinePlayers()) {
+            if(team_member.getName().equalsIgnoreCase(leader)) {
+                if(b) continue;
+                b = true;
+            }
             HashMap<String, String> placeholders = new HashMap<>();
             placeholders.put("rank", prefix);
             placeholders.put("message", message);
+            placeholders.put("player", player.getName());
             team_member.sendMessage(ChatUtils.replace(Main.getInstance().getMessageConfiguration().getString("chat_member"), placeholders));
         }
     }

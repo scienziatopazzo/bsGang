@@ -368,8 +368,8 @@ public class TeamCommand extends BaseCommand {
     private void printTeamInfo(Player player, Team team) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put("leader", team.getLeader());
-        placeholders.put("members", String.join(", ", team.getMembers().toArray(new String[0])));
-        placeholders.put("moderators", String.join(", ", team.getModerators().toArray(new String[0])));
+        placeholders.put("members", team.getMembers().size() == 1 ? String.join(", ", team.getMembers().toArray(new String[0])) : String.join(", ", team.getMembers().toArray(new String[0])).substring(2));
+        placeholders.put("moderators", team.getModerators().size() == 1 ? String.join(", ", team.getModerators().toArray(new String[0])) : String.join(", ", team.getModerators().toArray(new String[0])).substring(2));
         placeholders.put("kills", String.valueOf(team.getKills()));
         placeholders.put("deaths", String.valueOf(team.getDeaths()));
         placeholders.put("points", String.valueOf(team.getPoints()));

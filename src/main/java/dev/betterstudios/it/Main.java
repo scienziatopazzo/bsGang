@@ -40,11 +40,13 @@ public final class Main extends JavaPlugin {
         messageFile = new GameFile("messages.yml");
         configuration = configFile.getFileConfiguration();
         messageConfiguration = messageFile.getFileConfiguration();
+        /*
         if(new LicenseChecker(configuration.getString("license"), "7157").verify()) {
             getLogger().log(Level.SEVERE, "LICENSE IS NOT SET OR IS INVALID");
             getServer().getPluginManager().disablePlugin(Main.getInstance());
             return;
         }
+         */
         BukkitCommandManager commandManager = new BukkitCommandManager(this);
         commandManager.registerCommand(new TeamCommand());
         if(!configuration.getBoolean("team.pvp"))

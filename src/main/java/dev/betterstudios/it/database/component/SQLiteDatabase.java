@@ -47,6 +47,7 @@ public class SQLiteDatabase implements Database {
 
     @Override
     public void save(List<Team> teams) {
+        if(teams == null) return;
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             reset();
             for (Team team : teams) {
