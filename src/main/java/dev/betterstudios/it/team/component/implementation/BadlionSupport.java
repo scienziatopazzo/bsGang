@@ -15,8 +15,10 @@ public class BadlionSupport {
     public static void refreshTeam() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Team team = Team.getTeam(player);
-            if(team == null) continue;
-
+            if(team == null) {
+                resetTeam(player);
+                continue;
+            }
             resetTeam(player);
             sendTeammates(player, team);
         }
