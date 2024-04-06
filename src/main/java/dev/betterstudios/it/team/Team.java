@@ -37,6 +37,8 @@ public class Team {
         this.moderators = moderators;
         if(!moderators.contains(leader))
             moderators.add(leader);
+        if(!members.contains(leader))
+            members.add(leader);
         this.points = points;
         this.kills = kills;
         this.deaths = death;
@@ -49,6 +51,7 @@ public class Team {
         this.members = new ArrayList<>();
         this.moderators = new ArrayList<>();
         moderators.add(leader);
+        members.add(leader);
         this.points = 0;
         this.kills = 0;
         this.deaths = 0;

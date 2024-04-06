@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -362,14 +363,14 @@ public class TeamCommand extends BaseCommand {
 
     @Subcommand("credits")
     public void onCredits(Player player) {
-        player.sendMessage(ChatUtils.color("&bbsGang &7created by &bdiscord.gg/betterstudios &7(Plugin available on SpigotMC)"));
+        player.sendMessage(ChatUtils.color("&bbsGang &7created by &bdiscord.gg/betterstudios"));
     }
 
     private void printTeamInfo(Player player, Team team) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put("leader", team.getLeader());
-        placeholders.put("members", team.getMembers().size() == 1 ? String.join(", ", team.getMembers().toArray(new String[0])) : String.join(", ", team.getMembers().toArray(new String[0])).substring(2));
-        placeholders.put("moderators", team.getModerators().size() == 1 ? String.join(", ", team.getModerators().toArray(new String[0])) : String.join(", ", team.getModerators().toArray(new String[0])).substring(2));
+        placeholders.put("members", Arrays.toString(team.getMembers().toArray(new String[0])));
+        placeholders.put("moderators", Arrays.toString(team.getModerators().toArray(new String[0])));
         placeholders.put("kills", String.valueOf(team.getKills()));
         placeholders.put("deaths", String.valueOf(team.getDeaths()));
         placeholders.put("points", String.valueOf(team.getPoints()));

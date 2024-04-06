@@ -1,4 +1,4 @@
-package dev.betterstudios.it.team.component;
+package dev.betterstudios.it.team.component.placeholder;
 
 import dev.betterstudios.it.Main;
 import dev.betterstudios.it.team.Team;
@@ -50,6 +50,8 @@ public class PlaceHolderExpansion extends PlaceholderExpansion {
                 return String.valueOf(Team.getTeam(player).getKills());
             case "deaths":
                 return String.valueOf(Team.getTeam(player).getDeaths());
+            case "points":
+                return String.valueOf(Team.getTeam(player).getPoints());
             default:
                 return "";
         }

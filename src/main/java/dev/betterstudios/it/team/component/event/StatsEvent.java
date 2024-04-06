@@ -1,4 +1,4 @@
-package dev.betterstudios.it.team.component;
+package dev.betterstudios.it.team.component.event;
 
 import dev.betterstudios.it.team.Team;
 import org.bukkit.entity.Player;

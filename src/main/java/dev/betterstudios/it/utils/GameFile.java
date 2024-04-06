@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GameFile {
 
 
-    private final FileConfiguration fileConfiguration;
+    private FileConfiguration fileConfiguration;
     private final File file;
 
 
@@ -25,21 +25,25 @@ public class GameFile {
         File configFile = new File(main.getDataFolder(), name);
         this.file = configFile;
 
-
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
             main.saveResource(name, false);
         }
 
-        FileConfiguration configuration = new YamlConfiguration();
+        if(name.contains(".yml")) {
+            FileConfiguration configuration = new YamlConfiguration();
 
-        try {
-            configuration.load(configFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
+            try {
+                configuration.load(configFile);
+            } catch (IOException | InvalidConfigurationException e) {
+                e.printStackTrace();
+            }
+
+            fileConfiguration = configuration;
         }
 
-        fileConfiguration = configuration;
+
+
     }
 
     public void reload() {

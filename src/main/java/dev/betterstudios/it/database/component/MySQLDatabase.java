@@ -21,29 +21,24 @@ public class MySQLDatabase implements Database {
     private HikariDataSource source;
     private Connection connection;
 
-    public MySQLDatabase() {
-        try {
-            HikariConfig config = new HikariConfig();
-            ConfigurationSection configuration = Main.getInstance().getConfiguration().getConfigurationSection("database.mysql");
-            String host = configuration.getString("host");
-            String port = configuration.getString("port");
-            String databaseName = configuration.getString("database");
-            String username = configuration.getString("username");
-            String password = configuration.getString("password");
+    public MySQLDatabase() throws SQLException {
 
-            config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + databaseName);
-            config.setUsername(username);
-            config.setPassword(password);
-            config.setMaximumPoolSize(10);
+        HikariConfig config = new HikariConfig();
+        ConfigurationSection configuration = Main.getInstance().getConfiguration().getConfigurationSection("database.mysql");
+        String host = configuration.getString("host");
+        String port = configuration.getString("port");
+        String databaseName = configuration.getString("database");
+        String username = configuration.getString("username");
+        String password = configuration.getString("password");
 
-            this.source = new HikariDataSource(config);
+        config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + databaseName);
+        config.setUsername(username);
+        config.setPassword(password);
+        config.setMaximumPoolSize(10);
 
-            this.connection = source.getConnection();
-        } catch (Exception e) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "PLEASE, RECHECK THE DB INFO (MYSQL)");
-            Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-            return;
-        }
+        this.source = new HikariDataSource(config);
+
+        this.connection = source.getConnection();
 
         createTable();
     }
@@ -84,8 +79,8 @@ public class MySQLDatabase implements Database {
                     new Team(
                             name,
                             leader,
-                            Arrays.stream(moderator.split(",")).collect(Collectors.toList()),
                             Arrays.stream(members.split(",")).collect(Collectors.toList()),
+                            Arrays.stream(moderator.split(",")).collect(Collectors.toList()),
                             kills,
                             death,
                             points

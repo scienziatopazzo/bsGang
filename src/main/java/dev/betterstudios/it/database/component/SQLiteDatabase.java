@@ -6,6 +6,7 @@ import dev.betterstudios.it.team.Team;
 import org.bukkit.Bukkit;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
@@ -16,32 +17,29 @@ public class SQLiteDatabase implements Database {
 
     private Connection connection;
 
-    public SQLiteDatabase() {
-        try {
-            Class.forName("org.sqlite.JDBC");
+    public SQLiteDatabase() throws ClassNotFoundException, IOException, SQLException {
 
-            String dbFileName = Main.getInstance().getConfiguration().getString("database.sqlite");
+        Class.forName("org.sqlite.JDBC");
 
-            File dataFolder = Main.getInstance().getDataFolder();
-            if (!dataFolder.exists())
-                dataFolder.mkdirs();
+        String dbFileName = Main.getInstance().getConfiguration().getString("database.sqlite");
 
-            File DBDataFolder = new File(dataFolder, "database");
-            if (!DBDataFolder.exists())
-                DBDataFolder.mkdirs();
+        File dataFolder = Main.getInstance().getDataFolder();
+        if (!dataFolder.exists())
+            dataFolder.mkdirs();
 
-            File dbFile = new File(DBDataFolder, dbFileName);
+        File DBDataFolder = new File(dataFolder, "database");
+        if (!DBDataFolder.exists())
+            DBDataFolder.mkdirs();
 
-            if (!dbFile.exists())
-                dbFile.createNewFile();
+        File dbFile = new File(DBDataFolder, dbFileName);
 
-            this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+        if (!dbFile.exists())
+            dbFile.createNewFile();
 
-            createTable();
-        } catch (Exception e) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "PLEASE, RECHECK THE DB INFO (SQLITE)", e);
-            Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-        }
+        this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+
+        createTable();
+
     }
 
 
@@ -95,7 +93,7 @@ public class SQLiteDatabase implements Database {
 
     private void createTable() {
         String query = "CREATE TABLE IF NOT EXISTS teams (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," + // count team created
                 "name TEXT NOT NULL," +
                 "leader TEXT NOT NULL," +
                 "moderator TEXT NOT NULL," +
