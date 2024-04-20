@@ -11,12 +11,10 @@ public class TeamRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if(Team.getTeams() == null) return;
-        for (Team team : Team.getTeams()) {
-            if(Main.getInstance().isBadLionSupport())
-                BadlionSupport.refreshTeam();
-            if(Main.getInstance().isLunarClientSupport())
-                LunarSupport.refreshTeam();
-        }
+        if(Main.getInstance().isBadLionSupport())
+            BadlionSupport.refreshTeam();
+        if(Main.getInstance().isLunarClientSupport())
+            LunarSupport.refreshTeam();
     }
 
 }

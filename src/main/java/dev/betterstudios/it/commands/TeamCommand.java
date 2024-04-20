@@ -9,9 +9,13 @@ import dev.betterstudios.it.Main;
 import dev.betterstudios.it.team.Team;
 import dev.betterstudios.it.utils.ChatUtils;
 import lombok.Getter;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -85,11 +89,13 @@ public class TeamCommand extends BaseCommand {
         placeholders.put("send", player.getName());
         placeholders.put("team", Team.getTeam(player).getName());
         ChatUtils.sendMessage(player, "invite_send", placeholders);
-        ChatUtils.sendMessage(target, "invited_received", placeholders);
+        net.md_5.bungee.api.chat.TextComponent message = new net.md_5.bungee.api.chat.TextComponent(ChatUtils.replace(Main.getInstance().getMessageConfiguration().getString("invited_received"), placeholders));
+        message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept " + player.getName()));
+        target.spigot().sendMessage(message);
     }
 
 
-    @Subcommand("accept|join")
+    @Subcommand("accept")
     public void onAccept(Player player, String[] args) {
         if(checkPlayer(player, args)) return;
         Player target = getPlayer(args);
@@ -121,6 +127,10 @@ public class TeamCommand extends BaseCommand {
             return;
         }
         Team team = Team.getTeam(player);
+        if(team.isModerator(player)) {
+            ChatUtils.sendMessage(player, "areal_moderator", new HashMap<>());
+            return;
+        }
         team.getModerators().add(target.getName());
         ChatUtils.sendMessage(player, "moderator_added", new HashMap<>());
     }
@@ -204,7 +214,7 @@ public class TeamCommand extends BaseCommand {
         ChatUtils.sendMessage(player, "team_renamed", new HashMap<>());
     }
 
-    @Subcommand("show")
+    @Subcommand("show|who")
     public void onShow(Player player, String[] args) {
         if(checkSyntax(player, args, 1)) return;
         Team team = null;

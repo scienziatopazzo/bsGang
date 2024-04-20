@@ -9,6 +9,7 @@
 #
 
 license: "null"
+
 placeholders:
   active: true
   no_team: "None"

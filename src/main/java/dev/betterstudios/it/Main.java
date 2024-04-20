@@ -48,6 +48,10 @@ public final class Main extends JavaPlugin {
             return;
         }
          */
+        if(!configuration.getString("license").equals("BETTERSTUDIOS-LICENSE")) {
+            disablePlugin();
+            return;
+        }
         loadDatabase();
         BukkitCommandManager commandManager = new BukkitCommandManager(this);
         commandManager.registerCommand(new TeamCommand());
@@ -55,7 +59,7 @@ public final class Main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new AntiPvPEvent(), this);
         Bukkit.getPluginManager().registerEvents(new ChatEvent(), this);
         Bukkit.getPluginManager().registerEvents(new StatsEvent(), this);
-                if(configuration.getBoolean("placeholders.active") && getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
+        if(configuration.getBoolean("placeholders.active") && getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
             new PlaceHolderExpansion().register();
         loadTeamIntegration();
         new TeamRunnable().runTaskTimerAsynchronously(this, 0L, 1L);
